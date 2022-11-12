@@ -160,6 +160,7 @@ const Home = () => {
       const address = await signer.getAddress();
       if (address.toLowerCase() === _owner.toLowerCase()) {
         setIsOwner(true);
+        console.log(address);
       }
     } catch (err) {
       console.error(err.message);
@@ -247,8 +248,13 @@ const Home = () => {
       );
     }
 
-    // if currently waiting for something, return loading button
+    // if waiting for something, return loading button
     if (loading) {
+      return <button className={styles.button}>Loading...</button>;
+    }
+
+    // if connected user is the owner, and presale hasn't started yet, allow user to start presale
+    if (isOwner && !presaleStarted) {
       return (
         <button className={styles.button} onClick={startPresale}>
           Start Presale!
